@@ -23,9 +23,8 @@ class PlaceDetail extends Component {
     viewMode: "portrait"
   };
 
-  constructor(props) {
-    super(props);
-    Dimensions.addEventListener("change", this.updateStyles);
+  componentDidMount() {
+    Dimensions.addEventListener("change", this.updateStyles)
   }
 
   componentWillUnmount() {

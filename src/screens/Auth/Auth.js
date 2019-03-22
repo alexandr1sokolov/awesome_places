@@ -2,25 +2,25 @@ import React, { Component } from "react";
 import {connect} from 'react-redux';
 import {
     View,
-    Text,
-    Button,
-    TextInput,
     StyleSheet,
     ImageBackground,
     Dimensions,
     KeyboardAvoidingView,
     Keyboard,
     TouchableWithoutFeedback,
-    ActivityIndicator, AsyncStorage
+    ActivityIndicator
 } from "react-native";
-
 import DefaultInput from "../../components/UI/DefaultInput/DefaultInput";
 import HeadingText from "../../components/UI/HeadingText/HeadingText";
 import MainText from "../../components/UI/MainText/MainText";
 import ButtonWithBackground from "../../components/UI/ButtonWithBackground/ButtonWithBackground";
-import backgroundImage from "../../assets/background.jpg";
-import validate from "../../utility/validation";
+
 import { tryAuth, authAutoSignIn } from "../../store/actions/index";
+
+import validate from "../../utility/validation";
+
+import backgroundImage from "../../assets/background.jpg";
+
 
 class AuthScreen extends Component {
     state = {
@@ -54,34 +54,21 @@ class AuthScreen extends Component {
         }
     };
 
-    constructor(props) {
-        super(props);
+    componentDidMount() {
         Dimensions.addEventListener("change", this.updateStyles);
+        this.props.onAutoSignIn()
     }
 
     componentWillUnmount() {
         Dimensions.removeEventListener("change", this.updateStyles);
     }
 
-    componentDidMount() {
-        // AsyncStorage.getItem("ap:auth:token")
-        //   .then(data=>data && this.props.onAutoSignIn())
-        //   .catch(error=> console.log(error))
-        this.props.onAutoSignIn()
-    }
-
     switchAuthModeHandler = () => {
-        this.setState(prevState => {
-            return {
-                authMode: prevState.authMode === "login" ? "signup" : "login"
-            };
-        });
+        this.setState(prevState => ({authMode: prevState.authMode === "login" ? "signup" : "login"}));
     };
 
     updateStyles = (dims) => {
-        this.setState({
-            viewMode: dims.window.height > 500 ? "portrait" : "landscape"
-        });
+        this.setState({viewMode: dims.window.height > 500 ? "portrait" : "landscape"});
     };
 
     authHandler = () => {

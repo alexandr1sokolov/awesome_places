@@ -22,24 +22,13 @@ class FindPlaceScreen extends Component {
         placesAnim: new Animated.Value(0)
     };
 
-    constructor(props) {
-        super(props);
-        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent);
-    }
+   componentDidMount(){
+       this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent);
+   }
 
     onNavigatorEvent = event => {
-        if (event.type === "ScreenChangedEvent") {
-            if (event.id === "willAppear") {
-                this.props.onLoadPlaces();
-            }
-        }
-        if (event.type === "NavBarButtonPress") {
-            if (event.id === "sideDrawerToggle") {
-                this.props.navigator.toggleDrawer({
-                    side: "left"
-                });
-            }
-        }
+        event.type === "ScreenChangedEvent" && event.id === "willAppear" && this.props.onLoadPlaces();
+        event.type === "NavBarButtonPress" && event.id === "sideDrawerToggle" && this.props.navigator.toggleDrawer({ side: "left"});
     };
 
     placesLoadedHandler = () => {
@@ -64,9 +53,8 @@ class FindPlaceScreen extends Component {
     };
 
     itemSelectedHandler = key => {
-        const selPlace = this.props.places.find(place => {
-            return place.key === key;
-        });
+        const selPlace = this.props.places.find(place => place.key === key);
+
         this.props.navigator.push({
             screen: "awesome-places.PlaceDetailScreen",
             title: selPlace.name,

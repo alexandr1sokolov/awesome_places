@@ -1,30 +1,30 @@
 import React from 'react';
 import {TouchableOpacity, TouchableNativeFeedback, Text, View, StyleSheet, Platform} from 'react-native';
 
-const buttonWithBackground = props => {
+const buttonWithBackground = ({color, disabled, children, onPress}) => {
     const content = (
         <View
             style={[
                 styles.button,
-                { backgroundColor: props.color },
-                props.disabled ? styles.disabled : null
+                { backgroundColor: color },
+                disabled ? styles.disabled : null
             ]}
         >
-            <Text style={props.disabled ? styles.disabledText : null}>
-                {props.children}
+            <Text style={disabled ? styles.disabledText : null}>
+                {children}
             </Text>
         </View>
     );
-    if (props.disabled) {
+    if (disabled) {
         return content;
     }
     return (
          Platform.OS === 'android' ? (
-                    <TouchableNativeFeedback onPress={props.onPress}>
+                    <TouchableNativeFeedback onPress={onPress}>
                         {content}
                     </TouchableNativeFeedback>
                 ) : (
-                    <TouchableOpacity onPress={props.onPress}>
+                    <TouchableOpacity onPress={onPress}>
                         {content}
                     </TouchableOpacity>
                 )

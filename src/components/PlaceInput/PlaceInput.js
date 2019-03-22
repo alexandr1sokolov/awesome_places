@@ -1,5 +1,4 @@
-import React, { Component } from "react";
-import { View, TextInput, Button, StyleSheet } from "react-native";
+import React from "react";
 
 import DefaultInput from "../UI/DefaultInput/DefaultInput";
 
