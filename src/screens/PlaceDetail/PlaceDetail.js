@@ -3,16 +3,14 @@ import {
   View,
   Image,
   Text,
-  Button,
   StyleSheet,
   TouchableOpacity,
   Platform,
   Dimensions,
+  ScrollView
 
 } from "react-native";
 import MapView from "react-native-maps";
-
-
 import { connect } from "react-redux";
 
 import Icon from "react-native-vector-icons/Ionicons";
@@ -42,23 +40,12 @@ class PlaceDetail extends Component {
     this.props.navigator.pop();
   };
 
+
   render() {
     return (
-      <View
-        style={[
-          styles.container,
-          this.state.viewMode === "portrait"
-            ? styles.portraitContainer
-            : styles.landscapeContainer
-        ]}
-      >
+      <ScrollView>
+      <View style={[ styles.container, this.state.viewMode === "portrait" ? styles.portraitContainer : styles.landscapeContainer ]}>
         <View style={styles.placeDetailContainer}>
-          <View style={styles.subContainer}>
-            <Image
-              source={this.props.selectedPlace.image}
-              style={styles.placeImage}
-            />
-          </View>
           <View style={styles.subContainer}>
             <MapView
               initialRegion={{
@@ -73,9 +60,21 @@ class PlaceDetail extends Component {
             >
               <MapView.Marker coordinate={this.props.selectedPlace.location} />
             </MapView>
+            <Image
+              source={this.props.selectedPlace.image}
+              style={styles.placeImage}
+            />
           </View>
         </View>
         <View style={styles.subContainer}>
+          {
+            this.props.selectedPlace.note &&
+            <View>
+              <Text style={styles.placeName}>
+                {this.props.selectedPlace.note}
+              </Text>
+            </View>
+          }
           <View>
             <Text style={styles.placeName}>
               {this.props.selectedPlace.name}
@@ -94,6 +93,7 @@ class PlaceDetail extends Component {
           </View>
         </View>
       </View>
+      </ScrollView>
     );
   }
 }
@@ -104,17 +104,18 @@ const styles = StyleSheet.create({
     flex: 1
   },
   portraitContainer: {
-    flexDirection: "column"
+    flexDirection: "column",
+
   },
   landscapeContainer: {
     flexDirection: "row"
   },
   placeDetailContainer: {
-    flex: 2
+    flex: 1,
   },
   placeImage: {
-    width: "100%",
-    height:"100%",
+    flex:1,
+    height: 200,
   },
   placeName: {
     fontWeight: "bold",
@@ -122,13 +123,15 @@ const styles = StyleSheet.create({
     fontSize: 28
   },
   map: {
-    ...StyleSheet.absoluteFillObject
+    flex:1,
+    height: 200,
+
   },
   deleteButton: {
     alignItems: "center"
   },
   subContainer: {
-    flex: 1
+    flex: 1,
   }
 });
 

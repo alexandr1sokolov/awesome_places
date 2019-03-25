@@ -65,20 +65,14 @@ class FindPlaceScreen extends Component {
     };
 
     render() {
+      const settings = {
+        scale: this.state.removeAnim.interpolate({
+          inputRange: [0, 1],
+          outputRange: [12, 1]
+        })
+      };
         let content = (
-            <Animated.View
-                style={{
-                    opacity: this.state.removeAnim,
-                    transform: [
-                        {
-                            scale: this.state.removeAnim.interpolate({
-                                inputRange: [0, 1],
-                                outputRange: [12, 1]
-                            })
-                        }
-                    ]
-                }}
-            >
+            <Animated.View style={{ opacity: this.state.removeAnim, transform: [ settings ] }}>
                 <TouchableOpacity onPress={this.placesSearchHandler}>
                     <View style={styles.searchButton}>
                         <Text style={styles.searchButtonText}>Find Places</Text>
@@ -88,11 +82,7 @@ class FindPlaceScreen extends Component {
         );
         if (this.state.placesLoaded) {
             content = (
-                <Animated.View
-                    style={{
-                        opacity: this.state.placesAnim
-                    }}
-                >
+                <Animated.View style={{ opacity: this.state.placesAnim }}>
                     <PlaceList
                         places={this.props.places}
                         onItemSelected={this.itemSelectedHandler}

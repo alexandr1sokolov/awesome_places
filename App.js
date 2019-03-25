@@ -42,7 +42,7 @@ Navigation.registerComponent(
   Provider
 );
 
-// Start a App
+// Start App
 export default ()=> Navigation.startSingleScreenApp({
   screen: {
     screen: "awesome-places.AuthScreen",

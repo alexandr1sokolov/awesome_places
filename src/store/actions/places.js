@@ -7,7 +7,7 @@ export const startAddPlace = () => {
   };
 };
 
-export const addPlace = (placeName, location, image) => {
+export const addPlace = (placeName, location, image, note) => {
   return dispatch => {
     let authToken;
     dispatch(uiStartLoading());
@@ -47,7 +47,8 @@ export const addPlace = (placeName, location, image) => {
           name: placeName,
           location: location,
           image: parsedRes.imageUrl,
-          imagePath: parsedRes.imagePath
+          imagePath: parsedRes.imagePath,
+          note: note
         };
         return fetch(
           "https://awesome-places-223109.firebaseio.com/places.json?auth=" +

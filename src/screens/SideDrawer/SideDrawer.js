@@ -5,7 +5,8 @@ import {
     Dimensions,
     StyleSheet,
     TouchableOpacity,
-    Platform
+    Platform,
+  Switch
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { connect } from "react-redux";
@@ -32,6 +33,10 @@ class SideDrawer extends Component {
                       <Text>Sign Out</Text>
                   </View>
               </TouchableOpacity>
+              <View style={[styles.drawerItem, styles.switch]}>
+                  <Text>Night Mode</Text>
+                  <Switch onValueChange={}/>
+              </View>
           </View>
         );
     }
@@ -47,10 +52,14 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         padding: 10,
-        backgroundColor: "#eee"
+        backgroundColor: "#eee",
+        marginBottom:5
     },
     drawerItemIcon: {
         marginRight: 10
+    },
+    switch: {
+        justifyContent: 'space-between'
     }
 });
 

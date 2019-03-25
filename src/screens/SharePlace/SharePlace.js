@@ -11,24 +11,27 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 
-import { addPlace } from "../../store/actions/index";
 import PlaceInput from "../../components/PlaceInput/PlaceInput";
+import NoteInput from "../../components/NoteInput/NoteInput"
 import MainText from "../../components/UI/MainText/MainText";
 import HeadingText from "../../components/UI/HeadingText/HeadingText";
 import PickImage from "../../components/PickImage/PickImage";
 import PickLocation from "../../components/PickLocation/PickLocation";
-import validate from "../../utility/validation";
+
+import { addPlace } from "../../store/actions/index";
 import { startAddPlace } from "../../store/actions/index";
+
+import validate from "../../utility/validation";
+
 
 class SharePlaceScreen extends Component {
     static navigatorStyle = {
         navBarButtonColor: "#29aaf4"
     };
 
-    constructor(props) {
-        super(props);
-        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent);
-    }
+   componentDidMount(){
+     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent);
+   }
 
   componentWillMount() {
     this.reset();
@@ -51,6 +54,14 @@ class SharePlaceScreen extends Component {
         image: {
           value: null,
           valid: false
+        },
+        note:{
+          value: "",
+          valid: true,
+          touched: false,
+          validationRules: {
+            notEmpty: true
+          }
         }
       }
     });
@@ -58,7 +69,6 @@ class SharePlaceScreen extends Component {
   componentDidUpdate() {
     if (this.props.placeAdded) {
       this.props.navigator.switchToTab({ tabIndex: 0 });
-      // this.props.onStartAddPlace();
     }
   }
 
@@ -93,6 +103,22 @@ class SharePlaceScreen extends Component {
         });
     };
 
+  noteChangedHandler = val => {
+    this.setState(prevState => {
+      return {
+        controls: {
+          ...prevState.controls,
+          note: {
+            ...prevState.controls.note,
+            value: val,
+            valid: validate(val, prevState.controls.note.validationRules),
+            touched: true
+          }
+        }
+      };
+    });
+  };
+
   locationPickedHandler = location => {
     this.setState(prevState => {
       return {
@@ -125,12 +151,12 @@ class SharePlaceScreen extends Component {
     this.props.onAddPlace(
       this.state.controls.placeName.value,
       this.state.controls.location.value,
-      this.state.controls.image.value
+      this.state.controls.image.value,
+      this.state.controls.note.value
     );
     this.reset();
     this.imagePicker.reset();
     this.locationPicker.reset();
-    // this.props.navigator.switchToTab({tabIndex: 0})
   };
 
     render() {
@@ -151,10 +177,10 @@ class SharePlaceScreen extends Component {
       }
 
       return (
-        <ScrollView>
+        <ScrollView style={styles.scrollView}>
           <View style={styles.container}>
             <MainText>
-              <HeadingText>Share a Place with us!</HeadingText>
+              <HeadingText>Share a Place!</HeadingText>
             </MainText>
             <PickImage
               onImagePicked={this.imagePickedHandler}
@@ -163,6 +189,10 @@ class SharePlaceScreen extends Component {
             <PickLocation
               onLocationPick={this.locationPickedHandler}
               ref={ref => (this.locationPicker = ref)}
+            />
+            <NoteInput
+              noteData={this.state.controls.note}
+              onChangeText={this.noteChangedHandler}
             />
             <PlaceInput
               placeData={this.state.controls.placeName}
@@ -193,6 +223,9 @@ const styles = StyleSheet.create({
   previewImage: {
     width: "100%",
     height: "100%"
+  },
+  scrollView:{
+    flex: 1,
   }
 });
 
@@ -205,8 +238,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAddPlace: (placeName, location, image) =>
-      dispatch(addPlace(placeName, location, image)),
+    onAddPlace: (placeName, location, image, note) =>
+      dispatch(addPlace(placeName, location, image, note)),
     onStartAddPlace: () => dispatch(startAddPlace())
   };
 };
