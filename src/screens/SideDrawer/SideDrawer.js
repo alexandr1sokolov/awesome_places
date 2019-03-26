@@ -11,7 +11,7 @@ import {
 import Icon from "react-native-vector-icons/Ionicons";
 import { connect } from "react-redux";
 
-import { authLogout } from "../../store/actions/index";
+import { authLogout, nightModeToggle } from "../../store/actions/index";
 
 class SideDrawer extends Component {
     render() {
@@ -19,23 +19,28 @@ class SideDrawer extends Component {
           <View
             style={[
                 styles.container,
-                { width: Dimensions.get("window").width * 0.8 }
+                {
+                    width: Dimensions.get("window").width * 0.8,
+                    backgroundColor: this.props.screenMode.background
+                }
             ]}
           >
               <TouchableOpacity onPress={this.props.onLogout}>
-                  <View style={styles.drawerItem}>
+                  <View style={[styles.drawerItem,{backgroundColor: this.props.screenMode.background}]}>
                       <Icon
                         name={Platform.OS === "android" ? "md-log-out" : "ios-log-out"}
                         size={30}
                         color="#aaa"
                         style={styles.drawerItemIcon}
                       />
-                      <Text>Sign Out</Text>
+                      <Text style={{color:this.props.screenMode.textColor}}>Sign Out</Text>
                   </View>
               </TouchableOpacity>
               <View style={[styles.drawerItem, styles.switch]}>
-                  <Text>Night Mode</Text>
-                  <Switch onValueChange={}/>
+                  <Text style={{color:this.props.screenMode.textColor}}>Night Mode</Text>
+                  <Switch onValueChange={this.props.nightModeToggleFunc}
+                          value={this.props.screenMode.background === "#1c1c1c"}
+                  />
               </View>
           </View>
         );
@@ -45,14 +50,12 @@ class SideDrawer extends Component {
 const styles = StyleSheet.create({
     container: {
         paddingTop: 50,
-        backgroundColor: "white",
         flex: 1
     },
     drawerItem: {
         flexDirection: "row",
         alignItems: "center",
         padding: 10,
-        backgroundColor: "#eee",
         marginBottom:5
     },
     drawerItemIcon: {
@@ -63,10 +66,17 @@ const styles = StyleSheet.create({
     }
 });
 
-const mapDispatchToProps = dispatch => {
+const mapStateToProps = state => {
     return {
-        onLogout: () => dispatch(authLogout())
+        screenMode: state.screenMode,
     };
 };
 
-export default connect(null, mapDispatchToProps)(SideDrawer);
+const mapDispatchToProps = dispatch => {
+    return {
+        onLogout: () => dispatch(authLogout()),
+        nightModeToggleFunc:()=>dispatch(nightModeToggle())
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SideDrawer);

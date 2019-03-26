@@ -13,8 +13,9 @@ import { getPlaces } from "../../store/actions/index";
 
 class FindPlaceScreen extends Component {
     static navigatorStyle = {
-        navBarButtonColor: "#29aaf4"
+        navBarButtonColor: "#29aaf4",
     };
+
 
     state = {
         placesLoaded: false,
@@ -65,6 +66,10 @@ class FindPlaceScreen extends Component {
     };
 
     render() {
+      this.props.navigator.setStyle({
+        navBarBackgroundColor: this.props.screenMode.background,
+        navBarTextColor: this.props.screenMode.textColor
+      });
       const settings = {
         scale: this.state.removeAnim.interpolate({
           inputRange: [0, 1],
@@ -86,12 +91,15 @@ class FindPlaceScreen extends Component {
                     <PlaceList
                         places={this.props.places}
                         onItemSelected={this.itemSelectedHandler}
+                        style={{backgroundColor: this.props.screenMode.background,textColor:this.props.screenMode.textColor}}
+
                     />
                 </Animated.View>
             );
         }
+        console.log("props",this.props.screenMode.background);
         return (
-            <View style={this.state.placesLoaded ? null : styles.buttonContainer}>
+            <View style={[this.state.placesLoaded ? null : styles.buttonContainer,{backgroundColor: this.props.screenMode.background}]}>
                 {content}
             </View>
         );
@@ -102,7 +110,7 @@ const styles = StyleSheet.create({
     buttonContainer: {
         flex: 1,
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
     },
     searchButton: {
         borderColor: "#29aaf4",
@@ -119,7 +127,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        places: state.places.places
+        places: state.places.places,
+        screenMode: state.screenMode,
     };
 };
 
