@@ -1,6 +1,6 @@
 import {NIGHT_MODE_TOGGLE} from "../actions/actionTypes";
 
-const dayMode = {background : "#eeeeee", textColor:"#000000"};
+const dayMode = {background : "#ffffff", textColor:"#000000"};
 const nightMode = {background : "#1c1c1c", textColor:"#9b9b9b"};
 
 const NightModeToggleReducer = (state = dayMode, action) => {

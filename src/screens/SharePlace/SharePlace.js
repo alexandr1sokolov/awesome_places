@@ -176,6 +176,13 @@ class SharePlaceScreen extends Component {
         submitButton = <ActivityIndicator />;
       }
 
+      this.props.navigator.setStyle({
+        navBarBackgroundColor: this.props.screenMode.background,
+        navBarTextColor: this.props.screenMode.textColor,
+        screenBackgroundColor: this.props.screenMode.background,
+        tabBarBackgroundColor: this.props.screenMode.background
+      });
+
       return (
         <ScrollView style={styles.scrollView}>
           <View style={styles.container}>
@@ -232,7 +239,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     isLoading: state.ui.isLoading,
-    placeAdded: state.places.placeAdded
+    placeAdded: state.places.placeAdded,
+    screenMode: state.screenMode,
   };
 };
 

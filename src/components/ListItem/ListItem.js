@@ -1,21 +1,23 @@
 import React from "react";
+import { connect } from "react-redux";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 
-const listItem = ({onItemPressed,placeImage, placeName, style}) => (
+const listItem = ({onItemPressed,placeImage, placeName, ...props}) => {
+  return (
   <TouchableOpacity onPress={onItemPressed}>
-    <View style={[styles.listItem,{backgroundColor: style.background}]}>
-      <Image resizeMode="cover" source={placeImage} style={styles.placeImage} />
-      <Text style={{color: style.textColor}}>{placeName}</Text>
+    <View style={[styles.listItem, {backgroundColor: props.screenMode.background}]}>
+      <Image resizeMode="cover" source={placeImage} style={styles.placeImage}/>
+      <Text style={{color: props.screenMode.textColor}}>{placeName}</Text>
     </View>
   </TouchableOpacity>
-);
+  )
+};
 
 const styles = StyleSheet.create({
   listItem: {
     width: "100%",
     marginBottom: 5,
     padding: 10,
-    // backgroundColor: "red",
     flexDirection: "row",
     alignItems: "center",
 
@@ -27,4 +29,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export default listItem;
+const mapStateToProps = state => {
+  return {
+    screenMode: state.screenMode,
+  };
+};
+
+export default connect(mapStateToProps, null) (listItem);

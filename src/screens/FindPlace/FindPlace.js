@@ -68,7 +68,9 @@ class FindPlaceScreen extends Component {
     render() {
       this.props.navigator.setStyle({
         navBarBackgroundColor: this.props.screenMode.background,
-        navBarTextColor: this.props.screenMode.textColor
+        navBarTextColor: this.props.screenMode.textColor,
+        screenBackgroundColor: this.props.screenMode.background,
+        tabBarBackgroundColor: this.props.screenMode.background
       });
       const settings = {
         scale: this.state.removeAnim.interpolate({
@@ -91,8 +93,6 @@ class FindPlaceScreen extends Component {
                     <PlaceList
                         places={this.props.places}
                         onItemSelected={this.itemSelectedHandler}
-                        style={{backgroundColor: this.props.screenMode.background,textColor:this.props.screenMode.textColor}}
-
                     />
                 </Animated.View>
             );
