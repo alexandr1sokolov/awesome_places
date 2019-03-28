@@ -187,7 +187,7 @@ class SharePlaceScreen extends Component {
         <ScrollView style={styles.scrollView}>
           <View style={styles.container}>
             <MainText>
-              <HeadingText>Share a Place!</HeadingText>
+              <HeadingText style={{color: this.props.screenMode.textColor}}>Share a Place!</HeadingText>
             </MainText>
             <PickImage
               onImagePicked={this.imagePickedHandler}

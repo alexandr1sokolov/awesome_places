@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { View, Image, Button, StyleSheet } from "react-native";
 import ImagePicker from "react-native-image-picker";
 
@@ -32,7 +33,7 @@ class PickImage extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.placeholder}>
-          <Image source={this.state.pickedImage} style={styles.previewImage} />
+          <Image source={this.state.pickedImage} style={[styles.previewImage,{backgroundColor: this.props.screenMode.background}]} />
         </View>
         <View style={styles.button}>
           <Button title="Pick Image" onPress={this.pickImageHandler} />
@@ -59,8 +60,14 @@ const styles = StyleSheet.create({
     },
     previewImage: {
         width: "100%",
-        height: "100%"
+        height: "100%",
     }
   });
 
-export default PickImage;
+const mapStateToProps = state => {
+  return {
+    screenMode: state.screenMode,
+  };
+};
+
+export default connect(mapStateToProps, null)(PickImage);

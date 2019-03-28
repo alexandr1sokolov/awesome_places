@@ -10,11 +10,14 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { connect } from "react-redux";
+import { Navigation } from "react-native-navigation";
 
 import { authLogout, nightModeToggle } from "../../store/actions/index";
 
 class SideDrawer extends Component {
     render() {
+// console.log("nav", Navigation.mergeOptions("startTabs", options = {tabBar: {tabBarBackgroundColor: this.props.screenMode.background}}));
+
         return (
           <View
             style={[
@@ -75,7 +78,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onLogout: () => dispatch(authLogout()),
-        nightModeToggleFunc:()=>dispatch(nightModeToggle())
+        nightModeToggleFunc:(e)=>dispatch(nightModeToggle())
     };
 };
 

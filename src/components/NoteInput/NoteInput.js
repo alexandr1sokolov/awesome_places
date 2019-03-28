@@ -3,7 +3,6 @@ import React from "react";
 import DefaultInput from "../UI/DefaultInput/DefaultInput";
 
 const NoteInput =(props)=> {
-  console.log("note", props);
   return <DefaultInput
     placeholder="Note"
     value={props.noteData.value}

@@ -97,7 +97,6 @@ class FindPlaceScreen extends Component {
                 </Animated.View>
             );
         }
-        console.log("props",this.props.screenMode.background);
         return (
             <View style={[this.state.placesLoaded ? null : styles.buttonContainer,{backgroundColor: this.props.screenMode.background}]}>
                 {content}

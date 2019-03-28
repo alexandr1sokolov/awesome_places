@@ -3,7 +3,6 @@ import React from "react";
 import DefaultInput from "../UI/DefaultInput/DefaultInput";
 
 const PlaceInput = (props) => {
-  console.log(props);
   return < DefaultInput
   placeholder = "Place Name"
   value = {props.placeData.value}
