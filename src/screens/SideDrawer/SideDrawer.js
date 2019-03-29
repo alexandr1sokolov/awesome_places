@@ -10,14 +10,11 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { connect } from "react-redux";
-import { Navigation } from "react-native-navigation";
 
 import { authLogout, nightModeToggle } from "../../store/actions/index";
 
 class SideDrawer extends Component {
     render() {
-// console.log("nav", Navigation.mergeOptions("startTabs", options = {tabBar: {tabBarBackgroundColor: this.props.screenMode.background}}));
-
         return (
           <View
             style={[
@@ -29,18 +26,18 @@ class SideDrawer extends Component {
             ]}
           >
               <TouchableOpacity onPress={this.props.onLogout}>
-                  <View style={[styles.drawerItem,{backgroundColor: this.props.screenMode.background}]}>
+                  <View style={[styles.drawerItem, {backgroundColor: this.props.screenMode.background}]}>
                       <Icon
                         name={Platform.OS === "android" ? "md-log-out" : "ios-log-out"}
                         size={30}
                         color="#aaa"
                         style={styles.drawerItemIcon}
                       />
-                      <Text style={{color:this.props.screenMode.textColor}}>Sign Out</Text>
+                      <Text style={{color: this.props.screenMode.textColor}}>Sign Out</Text>
                   </View>
               </TouchableOpacity>
               <View style={[styles.drawerItem, styles.switch]}>
-                  <Text style={{color:this.props.screenMode.textColor}}>Night Mode</Text>
+                  <Text style={{color: this.props.screenMode.textColor}}>Night Mode</Text>
                   <Switch onValueChange={this.props.nightModeToggleFunc}
                           value={this.props.screenMode.background === "#1c1c1c"}
                   />
@@ -76,6 +73,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
+
+
     return {
         onLogout: () => dispatch(authLogout()),
         nightModeToggleFunc:(e)=>dispatch(nightModeToggle())

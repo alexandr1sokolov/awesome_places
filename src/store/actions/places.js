@@ -8,6 +8,7 @@ export const startAddPlace = () => {
 };
 
 export const addPlace = (placeName, location, image, note) => {
+  console.log("image",image);
   return dispatch => {
     let authToken;
     dispatch(uiStartLoading());

@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import { View, Image, Button, StyleSheet } from "react-native";
 import ImagePicker from "react-native-image-picker";
+import { connect } from "react-redux";
+
+
 
 class PickImage extends Component {
   state = {
@@ -27,9 +29,11 @@ class PickImage extends Component {
         this.props.onImagePicked({uri: res.uri, base64: res.data});
       }
     });
+    this.reset()
   };
 
   render() {
+    console.log("img",this.props);
     return (
       <View style={styles.container}>
         <View style={styles.placeholder}>

@@ -155,7 +155,6 @@ class SharePlaceScreen extends Component {
       this.state.controls.note.value
     );
     this.reset();
-    this.imagePicker.reset();
     this.locationPicker.reset();
   };
 

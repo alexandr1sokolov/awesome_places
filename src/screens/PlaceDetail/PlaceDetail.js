@@ -42,6 +42,12 @@ class PlaceDetail extends Component {
 
 
   render() {
+    this.props.navigator.setStyle({
+      navBarBackgroundColor: this.props.screenMode.background,
+      navBarTextColor: this.props.screenMode.textColor,
+      screenBackgroundColor: this.props.screenMode.background,
+      tabBarBackgroundColor: this.props.screenMode.background
+    });
     return (
       <ScrollView>
       <View style={[ styles.container, this.state.viewMode === "portrait" ? styles.portraitContainer : styles.landscapeContainer ]}>
@@ -70,13 +76,13 @@ class PlaceDetail extends Component {
           {
             this.props.selectedPlace.note &&
             <View>
-              <Text style={styles.placeName}>
+              <Text style={[styles.placeName, {color: this.props.screenMode.textColor}]}>
                 {this.props.selectedPlace.note}
               </Text>
             </View>
           }
           <View>
-            <Text style={styles.placeName}>
+            <Text style={[styles.placeName, {color: this.props.screenMode.textColor}]}>
               {this.props.selectedPlace.name}
             </Text>
           </View>
@@ -135,10 +141,16 @@ const styles = StyleSheet.create({
   }
 });
 
+const mapStateToProps = state => {
+  return {
+    screenMode: state.screenMode,
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
     onDeletePlace: key => dispatch(deletePlace(key))
   };
 };
 
-export default connect(null, mapDispatchToProps)(PlaceDetail);
+export default connect(mapStateToProps, mapDispatchToProps)(PlaceDetail);
