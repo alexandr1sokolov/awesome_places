@@ -18,8 +18,7 @@ import HeadingText from "../../components/UI/HeadingText/HeadingText";
 import PickImage from "../../components/PickImage/PickImage";
 import PickLocation from "../../components/PickLocation/PickLocation";
 
-import { addPlace } from "../../store/actions/index";
-import { startAddPlace } from "../../store/actions/index";
+import {addPlace, startAddPlace , clearPickedImage} from "../../store/actions/index";
 
 import validate from "../../utility/validation";
 
@@ -155,6 +154,7 @@ class SharePlaceScreen extends Component {
       this.state.controls.note.value
     );
     this.reset();
+    this.props.clearPickedImageFunc();
     this.locationPicker.reset();
   };
 
@@ -190,7 +190,6 @@ class SharePlaceScreen extends Component {
             </MainText>
             <PickImage
               onImagePicked={this.imagePickedHandler}
-              ref={ref => (this.imagePicker = ref)}
             />
             <PickLocation
               onLocationPick={this.locationPickedHandler}
@@ -247,7 +246,8 @@ const mapDispatchToProps = dispatch => {
   return {
     onAddPlace: (placeName, location, image, note) =>
       dispatch(addPlace(placeName, location, image, note)),
-    onStartAddPlace: () => dispatch(startAddPlace())
+    onStartAddPlace: () => dispatch(startAddPlace()),
+    clearPickedImageFunc: () => dispatch(clearPickedImage())
   };
 };
 

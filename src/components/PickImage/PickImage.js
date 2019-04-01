@@ -2,18 +2,15 @@ import React, { Component } from "react";
 import { View, Image, Button, StyleSheet } from "react-native";
 import ImagePicker from "react-native-image-picker";
 import { connect } from "react-redux";
+import {setPickedImage, clearPickedImage} from "../../store/actions/index";
+
 
 
 
 class PickImage extends Component {
-  state = {
-    pickedImage: null
-  };
 
   reset = () => {
-    this.setState({
-      pickedImage: null
-    });
+    this.props.clearPickedImageFunc()
   };
 
   pickImageHandler = () => {
@@ -23,21 +20,17 @@ class PickImage extends Component {
       } else if (res.error) {
         console.log("Error", res.error);
       } else {
-        this.setState({
-          pickedImage: { uri: res.uri }
-        });
+        this.props.setPickedImageFunc({ uri: res.uri });
         this.props.onImagePicked({uri: res.uri, base64: res.data});
       }
     });
-    this.reset()
   };
 
   render() {
-    console.log("img",this.props);
     return (
       <View style={styles.container}>
         <View style={styles.placeholder}>
-          <Image source={this.state.pickedImage} style={[styles.previewImage,{backgroundColor: this.props.screenMode.background}]} />
+          <Image source={this.props.pickedImage} style={[styles.previewImage,{backgroundColor: this.props.screenMode.background}]} />
         </View>
         <View style={styles.button}>
           <Button title="Pick Image" onPress={this.pickImageHandler} />
@@ -71,7 +64,16 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     screenMode: state.screenMode,
+    pickedImage: state.pickedImage
   };
 };
 
-export default connect(mapStateToProps, null)(PickImage);
+const mapDispatchToProps = dispatch => {
+  return {
+    setPickedImageFunc: (pickedImage) =>
+      dispatch(setPickedImage(pickedImage)),
+    clearPickedImageFunc: () => dispatch(clearPickedImage())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PickImage);

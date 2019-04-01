@@ -4,13 +4,15 @@ import thunk from 'redux-thunk';
 import placesReducer from './reducers/places';
 import uiReducer from "./reducers/ui";
 import authReducer from "./reducers/auth";
-import NightModeToggleReducer from "./reducers/nightModeReducer"
+import NightModeToggleReducer from "./reducers/nightModeReducer";
+import pickedImageReducer from "./reducers/pickedImageReducer"
 
 const rootReducer = combineReducers({
   places: placesReducer,
   ui: uiReducer,
   auth: authReducer,
-  screenMode: NightModeToggleReducer
+  screenMode: NightModeToggleReducer,
+  pickedImage: pickedImageReducer
 });
 
 let composeEnhancers = compose;
