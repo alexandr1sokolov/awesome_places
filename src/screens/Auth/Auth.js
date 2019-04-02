@@ -146,7 +146,7 @@ class AuthScreen extends Component {
         if (this.state.viewMode === "portrait") {
             headingText = (
                 <MainText>
-                    <HeadingText>Please Log In</HeadingText>
+                    <HeadingText style={{color:"#ffffff"}}>Please Log In</HeadingText>
                 </MainText>
             );
         }

@@ -188,9 +188,7 @@ class SharePlaceScreen extends Component {
             <MainText>
               <HeadingText style={{color: this.props.screenMode.textColor}}>Share a Place!</HeadingText>
             </MainText>
-            <PickImage
-              onImagePicked={this.imagePickedHandler}
-            />
+            <PickImage onImagePicked={this.imagePickedHandler}/>
             <PickLocation
               onLocationPick={this.locationPickedHandler}
               ref={ref => (this.locationPicker = ref)}

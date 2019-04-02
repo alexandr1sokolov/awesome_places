@@ -7,7 +7,7 @@ const defaultInput = ({style, valid, touched, ...props}) => (
     placeholderTextColor={props.screenMode.textColor}
     underlineColorAndroid="transparent"
     {...props}
-    style={[styles.input, style, !valid && touched ? styles.invalid : null, {backgroundColor: props.screenMode.background}]}
+    style={[styles.input, style, !valid && touched ? styles.invalid : null, {backgroundColor: props.screenMode.background, color: props.screenMode.textColor}]}
   />
 );
 

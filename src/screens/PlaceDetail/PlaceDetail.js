@@ -73,19 +73,19 @@ class PlaceDetail extends Component {
           </View>
         </View>
         <View style={styles.subContainer}>
-          {
-            this.props.selectedPlace.note &&
-            <View>
-              <Text style={[styles.placeName, {color: this.props.screenMode.textColor}]}>
-                {this.props.selectedPlace.note}
-              </Text>
-            </View>
-          }
           <View>
             <Text style={[styles.placeName, {color: this.props.screenMode.textColor}]}>
               {this.props.selectedPlace.name}
             </Text>
           </View>
+          {
+            this.props.selectedPlace.note &&
+            <View>
+              <Text style={[styles.placeNote, {color: this.props.screenMode.textColor}]}>
+                {this.props.selectedPlace.note}
+              </Text>
+            </View>
+          }
           <View>
             <TouchableOpacity onPress={this.placeDeletedHandler}>
               <View style={styles.deleteButton}>
@@ -127,6 +127,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     fontSize: 28
+  },
+  placeNote: {
+    textAlign: "center",
+    fontSize: 26
   },
   map: {
     flex:1,
